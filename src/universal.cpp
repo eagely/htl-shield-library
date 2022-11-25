@@ -21,7 +21,7 @@ namespace adc {
 
     void setAutoTrigger(bool ate) {
         ADMUX &= ~(1 << ADATE);
-        ADMUX |= 1 << ADATE;
+        ADMUX |= ate << ADATE;
     }
 
     void setPrescaler(uint16_t prescaler) {
