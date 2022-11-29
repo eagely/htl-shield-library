@@ -5,7 +5,7 @@
 ### platformio.ini
 ```
 lib_deps =
-    "htl-shield"
+    "htl-shield-library"
 ```
 
 ### main.cpp
