@@ -9,4 +9,7 @@ namespace adc {
 
 namespace timer {
     void init(bool overflow = false, uint16_t prescaler = 0);
+    void setOverflow(bool overflow);
+    void setPrescaler(uint16_t prescaler);
+    void setTime(uint16_t value);
 }

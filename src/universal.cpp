@@ -21,7 +21,7 @@ namespace adc {
 
     void setAutoTrigger(bool autoTrigger) {
         ADMUX &= ~(1 << ADATE);
-        ADMUX |= ate << ADATE;
+        ADMUX |= 1 << ADATE;
     }
 
     void setPrescaler(uint16_t prescaler) {
@@ -44,10 +44,14 @@ namespace timer {
         TIMSK1 &= ~(overflow << TOIE1);
         TIMSK1 |= overflow << TOIE1;
     }
-    
+
     void setPrescaler(uint16_t prescaler) {
         TCCR1A &= ~(1 <<  CS10 | 1 << CS11 | 1 << CS12);
         TCCR1A |= (int) (log(prescaler) / log(4));
+    }
+
+    void setTime(uint16_t value) {
+        TCNT1 = value;
     }
 }
 
