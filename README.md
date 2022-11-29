@@ -2,7 +2,7 @@
 
 ## How to add library to your project:
 
-### Download the library, unzip it, put the folder "htl-shield-library in PlatformIOProject/lib and add these lines to your code
+### Download the library, unzip it, put the folder "htl-shield-library" in PlatformIOProject/lib and add these lines to your code
 ### platformio.ini
 ```
 lib_deps =
