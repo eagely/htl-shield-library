@@ -36,7 +36,7 @@ namespace adc {
 
 namespace timer {
     void init(bool overflow, uint16_t prescaler) {
-        TCCR1A = (int) (log(prescaler) / log(4));
+        TCCR1A = (int) (log10(prescaler) / log10(4));
         TIMSK1 = overflow << TOIE1;
     }
 
@@ -47,11 +47,11 @@ namespace timer {
 
     void setPrescaler(uint16_t prescaler) {
         TCCR1A &= ~(1 <<  CS10 | 1 << CS11 | 1 << CS12);
-        TCCR1A |= (int) (log(prescaler) / log(4));
+        TCCR1A |= (int) (log10(prescaler) / log10(4));
     }
 
-    void setTime(uint16_t value) {
-        TCNT1 = value;
+    void setTime(uint16_t microSeconds) {
+        TCNT1 = 65536 - microSeconds * 16;
     }
 }
 
