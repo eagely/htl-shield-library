@@ -8,7 +8,6 @@
 lib_deps =
     "htl-shield-library"
 ```
-
 ### main.cpp
 If you need ADC and Timer Interrupt functions:
 ```
