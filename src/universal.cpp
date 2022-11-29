@@ -4,9 +4,9 @@
 #include "../include/universal.h"
 // Lord forgive me for what I am about to code
 namespace adc {
-    void init(uint8_t pin, bool refs0, bool refs1, bool ate, uint16_t prescaler) {
-        ADMUX = pin | refs1 << REFS1 | refs0 << REFS0;
-        ADCSRA = 1 << ADEN | 1 << ADSC | ate << ADATE | (int) (log10(prescaler) / log10(2));
+    void init(uint8_t pin, bool R0, bool R1, bool autoTrigger, uint16_t prescaler) {
+        ADMUX = pin | R1 << REFS1 | R0 << REFS0;
+        ADCSRA = 1 << ADEN | 1 << ADSC | autoTrigger << ADATE | (int) (log10(prescaler) / log10(2));
     }
 
     void setPin(uint8_t pin) {
@@ -14,12 +14,12 @@ namespace adc {
         ADMUX |= pin;
     }
 
-    void setReference(bool refs0, bool refs1) {
+    void setReference(bool R0, bool R1) {
         ADMUX &= ~(1 << REFS0 | 1 << REFS1);
-        ADMUX |= refs0 << REFS0 | refs1 << REFS1;
+        ADMUX |= R0 << REFS0 | R1 << REFS1;
     }
 
-    void setAutoTrigger(bool ate) {
+    void setAutoTrigger(bool autoTrigger) {
         ADMUX &= ~(1 << ADATE);
         ADMUX |= 1 << ADATE;
     }
@@ -33,11 +33,21 @@ namespace adc {
         return ADCL | ADCH << 8;
     }
 }
-// currently only supports overflow and prescaler
+
 namespace timer {
-    void init(bool ovf, uint16_t prescaler) {
-        TCCR1A =
-        TIMSK1 = ovf << TOIE1;
+    void init(bool overflow, uint16_t prescaler) {
+        TCCR1A = (int) (log(prescaler) / log(4));
+        TIMSK1 = overflow << TOIE1;
+    }
+
+    void setOverflow(bool overflow) {
+        TIMSK1 &= ~(overflow << TOIE1);
+        TIMSK1 |= overflow << TOIE1;
+    }
+    
+    void setPrescaler(uint16_t prescaler) {
+        TCCR1A &= ~(1 <<  CS10 | 1 << CS11 | 1 << CS12);
+        TCCR1A |= (int) (log(prescaler) / log(4));
     }
 }
 
